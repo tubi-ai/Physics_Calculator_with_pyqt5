@@ -15,16 +15,16 @@ class CalculatorApp(QMainWindow):
         # Track the last active entry
         self.active_entry = None
 
-        # Central widget ve layout oluştur
+        # Creat central widget ve layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
 
-        # Tab widget ekle
+        # Add Tab widget
         self.tabs = QTabWidget()
         main_layout.addWidget(self.tabs)
 
-        # Üç sekme oluştur
+        # Create three tabs
         self.tab1 = QWidget()
         self.tab2 = QWidget()
         self.tab3 = QWidget()
@@ -33,12 +33,12 @@ class CalculatorApp(QMainWindow):
         self.tabs.addTab(self.tab2, "Ampère's Law: B = μ * I / (2 * π * r)")
         self.tabs.addTab(self.tab3, "Faraday's Law: E = - ΔΦ / Δt")
 
-        # Her sekme için layout oluştur ve bileşenleri ekle
+        # Create layouts and add components for each tab
         self.create_tab1_layout()
         self.create_tab2_layout()
         self.create_tab3_layout()
 
-        # Eşitlik ve reset düğmelerini ekle
+        # Add equality and reset buttons
         button_layout = QVBoxLayout()
         self.equal_button = QPushButton("=")
         self.equal_button.clicked.connect(self.calculate)
@@ -62,7 +62,7 @@ class CalculatorApp(QMainWindow):
         self.entry_volt = self.create_entry_with_label(layout, "V =", "V", 2)
         self.entry_current = self.create_entry_with_label(layout, "I =", "A", 3)
         
-        # Düğme takımı oluştur
+        # Create button set
         grid = QGridLayout()
         self.create_buttons(grid)
         layout.addLayout(grid, 4, 0, 1, 3)  # Example row/column values
@@ -83,7 +83,7 @@ class CalculatorApp(QMainWindow):
         self.entry_r = self.create_entry_with_label(layout, "r =", "m", 3)
         self.entry_mu = self.create_entry_with_label(layout, "μ =", "H/m", 4)
         
-        # Düğme takımı oluştur
+        # Create button set
         grid = QGridLayout()
         self.create_buttons(grid)
         layout.addLayout(grid, 9, 0, 1, 3)  # Example row/column values
@@ -102,7 +102,7 @@ class CalculatorApp(QMainWindow):
         self.entry_dt = self.create_entry_with_label(layout, "Δt =", "s", 2)
         self.entry_E = self.create_entry_with_label(layout, "E =", "V", 3)
         
-        # Düğme takımı oluştur
+        # Create button set
         grid = QGridLayout()
         self.create_buttons(grid)
         layout.addLayout(grid, 4, 0, 1, 3)  # Example row/column values
@@ -122,7 +122,7 @@ class CalculatorApp(QMainWindow):
             button.clicked.connect(lambda _, t=text: self.command_callback(t))
             layout.addWidget(button, row, col)
     
-        # Grid'in kolon ve satırlarını eşit şekilde genişle
+        # Widen grid columns and rows equally
         for i in range(3):
             layout.setColumnStretch(i, 1)
         for j in range(4):
@@ -171,7 +171,6 @@ class CalculatorApp(QMainWindow):
                 self.entry_ohm.setText(str(result))
 
         elif current_tab == 1:  # Ampère's Law
-            # Ampère's law hesaplamaları buraya
             b_combobox = self.combo_amp.currentText()
             I = self.get_value(self.entry_I)
             r = self.get_value(self.entry_r)
@@ -196,7 +195,6 @@ class CalculatorApp(QMainWindow):
             
 
         elif current_tab == 2:  # Faraday's Law
-            # Faraday's law hesaplamaları buraya
             f_combobox = self.combo_far.currentText()
             dphi = self.get_value(self.entry_df)
             dt = self.get_value(self.entry_dt)
@@ -215,7 +213,7 @@ class CalculatorApp(QMainWindow):
                 self.entry_dt.setText(str(result))
 
     def reset(self):
-        # Tüm giriş alanlarını temizle
+        # Clear all input fields
         for entry in [self.entry_ohm, self.entry_volt, self.entry_current, 
                       self.entry_B, self.entry_I, self.entry_r, 
                       self.entry_mu, self.entry_df, self.entry_dt, self.entry_E]:
